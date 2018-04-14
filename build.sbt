@@ -1,8 +1,7 @@
+import TaskUtil.SettingKeyUtil
 
-enablePlugins(ScalaJSPlugin)
-
-val port: Int = if (Configuration.deploy) 80 else 8080
-val optLevel = if (Configuration.deploy) fullOptJS else fastOptJS
+val port: Int = if (Configuration.release) 80 else 8080
+val optLevel = if (Configuration.release) fullOptJS else fastOptJS
 
 val app = (crossProject.crossType(NiceCrossType) in file("."))
   .settings(Configuration.commonSettings: _*)
@@ -12,19 +11,23 @@ val app = (crossProject.crossType(NiceCrossType) in file("."))
   .jsSettings(
     scalaJSUseMainModuleInitializer := true,
     skip in packageJSDependencies := false,
+    artifactPath in(Compile, packageJSDependencies) mapValue (_.getParentFile / Configuration.dependenciesJsName),
+    artifactPath in (Compile, optLevel) mapValue (_.getParentFile / Configuration.applicationJsName),
     libraryDependencies ++= Seq()
   )
   .jvmSettings(
-    libraryDependencies ++= Seq()
+    libraryDependencies ++= Seq(
+      "com.typesafe.akka" %% "akka-http" % "10.1.0",
+      "com.typesafe.akka" %% "akka-actor" % "2.5.11",
+      "com.typesafe.akka" %% "akka-stream" % "2.5.11")
   )
 
-lazy val appJS = app.js
-lazy val appJVM = app.jvm.settings(
-  (resources in Compile) += (optLevel in(appJS, Compile)).value.data,
-  (resources in Compile) += (packageJSDependencies in(appJS, Compile)).value
-)
-
-
+lazy val aClient = app.js.withId("app-client-side")
+lazy val aServer = app.jvm.withId("app-server-side")
+  .settings(
+    (resources in Compile) += (optLevel in(aClient, Compile)).value.data,
+    (resources in Compile) += (packageJSDependencies in(aClient, Compile)).value
+  )
 
 //lazy val server = crossProject.jvm
 //  .settings(

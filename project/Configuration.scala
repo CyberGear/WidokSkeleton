@@ -6,7 +6,7 @@ import sbt.Keys.version
 
 object Configuration {
 
-  val commonSettings = Seq(
+  lazy val commonSettings = Seq(
     scalaVersion := "2.11.12",
     organization := "com.sceleton",
     name := "app",
@@ -20,6 +20,8 @@ object Configuration {
     )
   )
 
-  val deploy: Boolean = System.getenv("DEPLOY") == "true"
+  lazy val release: Boolean = sys.props.getOrElse("release", "false") == "true"
+  lazy val dependenciesJsName = "deps.js"
+  lazy val applicationJsName = "application.js"
 
 }
