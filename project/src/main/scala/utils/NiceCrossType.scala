@@ -1,3 +1,5 @@
+package src.main.scala.utils
+
 import java.io.File
 
 import org.scalajs.sbtplugin.cross.CrossType

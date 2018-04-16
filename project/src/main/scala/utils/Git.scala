@@ -1,3 +1,5 @@
+package src.main.scala.utils
+
 import scala.sys.process.stringToProcess
 
 object Git {

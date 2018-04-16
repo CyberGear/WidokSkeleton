@@ -1,3 +1,5 @@
+package src.main.scala.utils
+
 import sbt.Def
 import sbt.SettingKey
 
