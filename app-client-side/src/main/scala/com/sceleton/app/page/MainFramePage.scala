@@ -7,7 +7,7 @@ import org.widok.Page
 import org.widok.Route
 import org.widok.View
 import org.widok.bindings.HTML.Container._
-import pl.metastack.metarx.Var
+import scala.concurrent.ExecutionContext.Implicits.global
 
 import scala.concurrent.Future
 
