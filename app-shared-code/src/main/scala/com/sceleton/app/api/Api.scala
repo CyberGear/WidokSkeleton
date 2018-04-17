@@ -1,6 +1,4 @@
-package com.sceleton.app
-
-import com.sceleton.app.api.ExampleApi
+package com.sceleton.app.api
 
 trait Api {
 
