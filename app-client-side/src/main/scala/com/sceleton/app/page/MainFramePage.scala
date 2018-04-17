@@ -2,19 +2,26 @@ package com.sceleton.app.page
 
 import com.sceleton.app.Router
 import com.sceleton.app.widget.Menu
+import org.widok.InstantiatedRoute
+import org.widok.Page
 import org.widok.Route
 import org.widok.View
 import org.widok.bindings.HTML.Container._
 import pl.metastack.metarx.Var
 
-trait MainFramePage extends FramePage {
+import scala.concurrent.Future
 
-  val selectedRoute: Var[Route] = Var(Router.index)
+trait MainFramePage extends Page {
+  val route: Route
 
-  override def mainFrame(body: View): View = Generic(
-    Menu(selectedRoute, "Home" -> Router.index, "3 Cities" -> Router.index, "About" -> Router.about),
+  def mainFrame(body: View): View = Generic(
+    Menu(route, "Home" -> Router.index, "Date" -> Router.date, "About" -> Router.about),
     Generic(
       body
-    )
+    ).css("body")
   )
+
+  def body(route: InstantiatedRoute): View
+
+  def render(route: InstantiatedRoute): Future[View] = Future[View](mainFrame(body(route)))
 }

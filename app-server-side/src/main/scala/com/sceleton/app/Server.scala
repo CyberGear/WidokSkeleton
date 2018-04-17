@@ -27,7 +27,43 @@ object Server extends App {
       <.head()(
         <.title()("App"),
         <.script(^.defer := true, ^.src := "dependencies.js")(),
-        <.script(^.defer := true, ^.src := "application.js")()
+        <.script(^.defer := true, ^.src := "application.js")(),
+        <.style()(
+          """
+            |body {
+            |  padding: 0px;
+            |  margin: 0px;
+            |}
+            |
+            |.body {
+            |  padding: 10px;
+            |}
+            |
+            |.menu {
+            |  background-color: #ccc;
+            |  position: relative;
+            |  padding: 10px;
+            |}
+            |
+            |.menu-item {
+            |  background-color: #ccc;
+            |  padding: 10px;
+            |}
+            |
+            |.menu-item:hover {
+            |  background-color: #ccf;
+            |}
+            |
+            |.menu-item:hover {
+            |  background-color: #ccf;
+            |}
+            |
+            |.menu-item.selected {
+            |  background-color: #fcf;
+            |}
+            |
+          """.stripMargin
+        )
       ),
       <.body(^.id := "page")()
     ).toString()
