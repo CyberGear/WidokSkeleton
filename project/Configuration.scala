@@ -26,11 +26,14 @@ object Configuration {
   )
 
   lazy val release: Boolean = sys.props.getOrElse("release", "false") == "true"
-  lazy val jsDependencies: String = "dependencies.js"
-  lazy val jsApplication: String = "application.js"
+  lazy val dependenciesJs: String = "dependencies.js"
+  lazy val applicationJs: String = "application.js"
 
   lazy val clientDependencies = Def.setting(Seq(
     "io.github.widok" %%% "widok" % "0.2.4" withSources() withJavadoc()
+  ))
+
+  lazy val jsDependencies = Def.setting(Seq(
   ))
 
   lazy val serverDependencies = Def.setting(Seq(
