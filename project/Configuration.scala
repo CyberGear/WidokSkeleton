@@ -26,6 +26,8 @@ object Configuration {
   )
 
   lazy val release: Boolean = sys.props.getOrElse("release", "false") == "true"
+  lazy val port: Int = if (release) 80 else 8080
+  lazy val jarSurfix:String = if (release) "" else "-dev"
   lazy val dependenciesJs: String = "dependencies.js"
   lazy val applicationJs: String = "application.js"
 

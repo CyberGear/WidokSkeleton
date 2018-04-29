@@ -7,12 +7,12 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
 import autowire.Core.Request
+import com.sceleton.BuildInfo
 import com.sceleton.app.api.Api
 import com.sceleton.app.controller.Controllers
 import upickle.default
 
 import scala.concurrent.ExecutionContext.Implicits.global
-
 import io.github.shogowada.statictags.StaticTags._
 
 object Server extends App {
@@ -86,7 +86,7 @@ object Server extends App {
     }
   }
 
-  Http().bindAndHandle(index ~ api, "0.0.0.0", port = 8080)
-  println(s"Started: http://localhost:8080")
+  Http().bindAndHandle(index ~ api, "0.0.0.0", port = BuildInfo.port)
+  println(s"Started: http://localhost:${BuildInfo.port}")
 
 }
