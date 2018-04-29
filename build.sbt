@@ -1,10 +1,11 @@
-import Configuration.release
 import src.main.scala.utils.NiceCrossType
 import src.main.scala.utils.TaskUtil.SettingKeyUtil
 
 disablePlugins(RevolverPlugin)
 disablePlugins(AssemblyPlugin)
 
+lazy val applicationJs = SettingKey[String]("applicationJs")
+lazy val dependenciesJs = SettingKey[String]("dependenciesJs")
 lazy val isRelease = SettingKey[Boolean]("isRelease")
 lazy val isDevelop = SettingKey[Boolean]("isDevelop")
 lazy val port = SettingKey[Int]("port")
@@ -16,11 +17,12 @@ val app = (crossProject.crossType(NiceCrossType) in file("."))
   .settings(Configuration.commonSettings: _*)
   .settings(
     libraryDependencies ++= Configuration.sharedDependencies.value,
+    applicationJs := Configuration.applicationJs,
+    dependenciesJs := Configuration.dependenciesJs,
     isRelease := Configuration.release,
     isDevelop := !Configuration.release,
     port := Configuration.port,
-    assemblyJarName := s"${name.value}-${version.value}${Configuration.jarSurfix}.jar",
-    buildInfoKeys := Seq[BuildInfoKey](version, isRelease, isDevelop, port),
+    buildInfoKeys := Seq[BuildInfoKey](version, isRelease, isDevelop, port, applicationJs, dependenciesJs),
     buildInfoPackage := organization.value
   )
   .jsSettings(
@@ -43,5 +45,5 @@ lazy val aServer = app.jvm.withId("app-server-side")
   .settings(
     (resources in Compile) += (optLevel in(aClient, Compile)).value.data,
     (resources in Compile) += (packageJSDependencies in(aClient, Compile)).value,
-    assemblyJarName := s"${name.value}-${version.value}.jar"
+    assemblyJarName := s"${name.value}-${version.value}${Configuration.jarSurfix}.jar"
   )

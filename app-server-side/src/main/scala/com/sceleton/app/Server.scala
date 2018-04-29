@@ -26,8 +26,8 @@ object Server extends App {
     <.html()(
       <.head()(
         <.title()("App"),
-        <.script(^.defer := true, ^.src := "dependencies.js")(),
-        <.script(^.defer := true, ^.src := "application.js")(),
+        <.script(^.defer := true, ^.src := BuildInfo.dependenciesJs)(),
+        <.script(^.defer := true, ^.src := BuildInfo.applicationJs)(),
         <.style()(
           """
             |body {
